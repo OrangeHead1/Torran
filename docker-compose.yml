@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  pronunciation-service:
+    build:
+      context: ./backend/pronunciation-service/app
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - IPA_VOCAB_PATH=/app/models/ipa_vocab.txt
+      - IPA_MODEL_PATH=/models/checkpoints/ipa-predictor-v1.0/model.pt
+    volumes:
+      - ./backend/pronunciation-service/app:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8001
+
+  api-gateway:
+    build:
+      context: ./backend/api-gateway/app
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PRONUNCIATION_SERVICE_URL=http://pronunciation-service:8001/api/pronunciation
+    volumes:
+      - ./backend/api-gateway/app:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
