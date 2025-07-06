@@ -1,4 +1,4 @@
-# Adaptive Pronunciation Coach: Monorepo
+# Adaptive Pronunciation Coach: Torran
 
 This repository contains all backend and (eventually) frontend code for the Adaptive Pronunciation Coach platform. It is organized for enterprise-scale, microservices-based development.
 
